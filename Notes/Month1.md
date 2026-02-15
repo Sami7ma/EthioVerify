@@ -43,3 +43,25 @@
 - Review Everything
 - Refactor
 - Write Documentation
+
+### The backend right know
+I need fundamentals first and i need to out server.js
+ethioverify/
+ └── ethioverify-backend/
+      ├── node_modules/
+      ├── package.json
+      ├── package-lock.json
+      └── server.js   ✅ HERE
+then it will be updating the backend part too
+ethioverify-backend/
+ ├── node_modules/
+ ├── package.json
+ ├── server.js
+ └── src/
+      ├── controllers/
+      ├── services/
+      ├── routes/
+      ├── middlewares/
+      ├── utils/
+      ├── config/
+      └── prisma/
