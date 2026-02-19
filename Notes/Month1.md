@@ -26,14 +26,14 @@
 - Connect DB ✅
 
 **Day 4:**
-- Create User Model 
-- Migrate database
-- Insert test user
+- Create User Model ✅
+- Migrate database ✅
+- Insert test user ✅
 
 **Day 5:**
-- Build Register endpoint
-- hash password with bycrpt
-- Test with postman
+- Build Register endpoint ✅
+- hash password with bycrpt 
+- Test with postman ✅
 
 **Day 6:**
 - Build Login Endpoint
@@ -45,7 +45,7 @@
 - Write Documentation
 
 ### The backend right know
-I need fundamentals first and i need to out server.js
+<!-- I need fundamentals first and i need to out server.js
 ethioverify/
  └── ethioverify-backend/
       ├── node_modules/
@@ -53,6 +53,7 @@ ethioverify/
       ├── package-lock.json
       └── server.js   ✅ HERE
 then it will be updating the backend part too
+*update we ascrapped whis we go to the point* server.js is instidn knwo -->
 ethioverify-backend/
  ├── node_modules/
  ├── package.json
@@ -136,5 +137,9 @@ ethioverify-backend/
 - Controllers -> handle request/response
 - Services -> contain business logic
 - Prisma -> only inside services layer
-**Flow Becomes**
+- **Flow Becomes**
       Route → Controller → Service → Prisma → Database
+- **Backend entry point**
+      package.json → script → file path → server.js
+      If this is wrong → crash
+- Learne about The post man, POSt 
