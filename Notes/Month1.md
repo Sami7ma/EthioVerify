@@ -32,12 +32,12 @@
 
 **Day 5:**
 - Build Register endpoint ✅
-- hash password with bycrpt 
+- hash password with bycrpt ✅
 - Test with postman ✅
 
 **Day 6:**
-- Build Login Endpoint
-- Implement JWT
+- Build Login Endpoint ✅
+- Implement JWT ✅
 
 **Day 7:**
 - Review Everything
@@ -143,3 +143,8 @@ ethioverify-backend/
       package.json → script → file path → server.js
       If this is wrong → crash
 - Learne about The post man, POSt 
+- **Hash Password** (bycrpt) it always one way and cannot revers to get the orignal bycry password
+      comaprsion must be bcrypt's internal compare method
+      Even if someone hacks your databse, they only see hashed passwords.
+- **Login codes:**
+
