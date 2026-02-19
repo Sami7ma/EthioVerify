@@ -26,7 +26,7 @@
 - Connect DB ✅
 
 **Day 4:**
-- Create User Model
+- Create User Model 
 - Migrate database
 - Insert test user
 
@@ -66,6 +66,7 @@ ethioverify-backend/
       ├── config/
       └── prisma/
 **what i learned so far**
+
 *2/17/2026*
 - dependencies vs dev dependencies
 - cors policy , Even toop
@@ -120,3 +121,20 @@ ethioverify-backend/
 | Adapter       | Connect Prisma → Driver   |
 | pg Driver     | Handle network connection |
 | PostgreSQL    | Store & execute data      |
+
+**NEXT: Connection Pooling**
+- DB connection is a live socket between the server and Postgressql
+- opening it is very expensive so we use : *Connection POOL* (automatically by pg driver btw)
+- it opens some liek 10 and each request take one use it adn the retuns it.
+
+**Transaction vs No transaction**
+- Simply For isonlation and keeping track of concurent operation
+
+*2/10/2026*
+- How src is organized in the backed
+- Routes -> define endpoints
+- Controllers -> handle request/response
+- Services -> contain business logic
+- Prisma -> only inside services layer
+**Flow Becomes**
+      Route → Controller → Service → Prisma → Database
