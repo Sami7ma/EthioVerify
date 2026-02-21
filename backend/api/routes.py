@@ -12,30 +12,33 @@ UPLOAD_DIR = "temp_uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/verify", response_model=ReceiptResponse)
-async def verify_receipt(file: UploadFile= File()):
-    try :
-        # save uploaded file to temp directory
+async def verify_receipt(file: UploadFile = File(...)):
+    try:
         file_path = os.path.join(UPLOAD_DIR, file.filename)
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        # extract metadata
+
+        # Metadata
         metadata = extract_metadata(file_path)
-        # check for editing software
         suspicious = check_editing_software(metadata)
-        # perform OCR
-        ocr_result = extract_text(file_path)
-        # perform ELA analysis
+
+        # OCR
+        ocr_data = extract_text(file_path)
+
+        # ELA heatmap
         ela_image = perform_ela(file_path)
-        ela_path = os.path.join(UPLOAD_DIR, f"ela_{file.filename}")
+        ela_path = os.path.join(UPLOAD_DIR, f"ELA_{file.filename}")
         ela_image.save(ela_path)
-        
-        return ReceiptResponse(
-            filename=file.filename,
-            metadata=metadata,
-            suspicious=suspicious,
-            ocr_result=ocr_result,
-            ela_path=ela_path
-        )
+
+        return {
+            "transaction_id": ocr_data["transaction_id"],
+            "amount": ocr_data["amount"],
+            "date": ocr_data["date"],
+            "suspicious_metadata": suspicious,
+            "raw_text": ocr_data["raw_text"],
+            "ela_heatmap_path": ela_path
+        }
+
     except Exception as e:
-        print("Error: ", e)
+        print("ERROR:", e)
         return {"error": str(e)}
