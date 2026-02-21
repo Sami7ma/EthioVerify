@@ -20,13 +20,14 @@ def extract_text(image_path: str) -> dict:
     try:
         results = reader.readtext(image_path)
         full_text = " ".join([text[1] for text in results])
+        normalized_text = " ".join(full_text.split())
 
-        transaction_id = extract_transaction_id(full_text)
-        amount = extract_amount(full_text)
-        date = extract_date(full_text)
+        transaction_id = extract_transaction_id(normalized_text)
+        amount = extract_amount(normalized_text)
+        date = extract_date(normalized_text)
 
         return {
-            "raw_text": full_text,
+            "raw_text": normalized_text,
             "transaction_id": transaction_id,
             "amount": amount,
             "date": date
@@ -43,16 +44,40 @@ def extract_text(image_path: str) -> dict:
 
 # Regex helpers
 def extract_transaction_id(text: str):
-    pattern = r"[A-Z0-9]{12,}"
-    match = re.search(pattern, text)
-    return match.group() if match else None
+    labelled_pattern = re.search(
+        r"(?i)(?:transaction|trx|tx|reference|ref)\s*(?:id|no)?\s*[:\-]?\s*([A-Z0-9\-]{8,30})",
+        text,
+    )
+    if labelled_pattern:
+        return labelled_pattern.group(1)
+
+    prefixed_pattern = re.search(r"\b(?:TXN|TRX|REF|FT)[A-Z0-9\-]{6,28}\b", text, re.IGNORECASE)
+    if prefixed_pattern:
+        return prefixed_pattern.group()
+
+    generic_pattern = re.search(r"\b[A-Z0-9]{12,30}\b", text)
+    return generic_pattern.group() if generic_pattern else None
 
 def extract_amount(text: str):
-    pattern = r"ETB\s?[\d,]+\.\d{2}"
-    match = re.search(pattern, text)
-    return match.group() if match else None
+    labelled_pattern = re.search(
+        r"(?i)(?:amount|total|paid)\s*[:\-]?\s*(?:ETB|Birr|Br)?\s*([\d,]+(?:\.\d{2})?)",
+        text,
+    )
+    if labelled_pattern:
+        return labelled_pattern.group(1)
+
+    currency_pattern = re.search(r"(?i)\b(?:ETB|Birr|Br)\s*([\d,]+(?:\.\d{2})?)", text)
+    return currency_pattern.group(1) if currency_pattern else None
 
 def extract_date(text: str):
-    pattern = r"\d{2}-[A-Za-z]{3}-\d{4}"
-    match = re.search(pattern, text)
-    return match.group() if match else None
+    patterns = [
+        r"\b\d{2}-[A-Za-z]{3}-\d{4}\b",
+        r"\b\d{2}/\d{2}/\d{4}\b",
+        r"\b\d{4}-\d{2}-\d{2}\b",
+        r"\b\d{2}-\d{2}-\d{4}\b",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            return match.group()
+    return None
