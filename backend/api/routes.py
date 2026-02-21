@@ -6,6 +6,8 @@ from ocr.extractor import extract_text
 from forensics.metadata import extract_metadata, check_editing_software
 from schemas.receipt import ReceiptResponse
 from forensics.ela import perform_ela
+from scoring.fraud_score import compute_fraud_score, classify_score
+from validators.rules import validate_receipt_logic
 router = APIRouter()
 
 UPLOAD_DIR = "temp_uploads"

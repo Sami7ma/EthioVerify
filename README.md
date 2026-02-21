@@ -36,12 +36,32 @@ This project demonstrates backend engineering, image processing, and fraud detec
 /receipt-verifier
 ├── /backend
 │   ├── /api
+│   │   └── routes.py
+│   │
+│   ├── /core
+│   │   └── config.py
+│   │
 │   ├── /forensics
+│   │   ├── metadata.py
+│   │   ├── ela.py
+│   │
 │   ├── /ocr
+│   │   └── extractor.py
+│   │
+│   ├── /validators         <-- Phase 3 (Rule Engine)
+│   │   ├── rules.py
+│   │   └── bank_patterns.py
+│   │
+│   ├── /scoring            <-- Phase 4
+│   │   └── fraud_score.py
+│   │
 │   ├── /schemas
-│   ├── /services
-│   └── main.py
-└── requirements.txt
+│   │   └── receipt.py
+│   │
+│   ├── main.py
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
