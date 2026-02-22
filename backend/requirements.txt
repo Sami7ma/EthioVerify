@@ -1,8 +1,9 @@
 fastapi
 uvicorn
-python-multipart
 pillow
+easyocr
+python-multipart
 opencv-python
 numpy
-easyocr
 pydantic
+pydantic-settings
