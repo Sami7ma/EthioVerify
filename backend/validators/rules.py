@@ -33,3 +33,16 @@ def validate_receipt_logic(data: dict):
     except:
         risk_flags.append("Invalid amount format")
         rule_score -= 20
+    
+    #4. Bank + Transaction ID consistency
+    bank = detect_bank(data["raw_text"])
+    txn_id = validate_transaction_id(data["transaction_id"], bank)
+    if not txn_id:
+        risk_flags.append(f"Transaction ID does not match {bank} pattern")
+        rule_score -= 30
+    
+    return{
+        "bank_detected": bank,
+        "risk_flags": risk_flags,
+        "rule_score": max(rule_score, 0)
+    }
