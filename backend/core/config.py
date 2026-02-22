@@ -1,19 +1,21 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
 
-    #application
-    APP_NAME: str = "EthioVerify"
+    APP_NAME: str = "Ethio-Verify"
     DEBUG: bool = True
-    
-    #UPLOAD
+
     UPLOAD_DIR: str = "temp_uploads"
 
-    #FRAUD SCORING WEIGHTS
     METADATA_WEIGHT: float = 0.15
     ELA_WEIGHT: float = 0.35
     OCR_WEIGHT: float = 0.15
-    RULES_WEIGHT: float = 0.35
+    RULE_WEIGHT: float = 0.35
 
-    class Config:
-        env_file = ".env"
+    model_config = {
+        "env_file": ".env"
+    }
+
+
+settings = Settings()

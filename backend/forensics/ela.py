@@ -1,8 +1,7 @@
 from PIL import Image, ImageChops, ImageEnhance
 import os
-import tempfile
 
-def perform_ela(image_path: str, save_path: str = None, quality: int = 85) -> Image.Image:
+def perform_ela(image_path: str, save_path: str = None, quality: int = 95) -> Image.Image:
     """
     Performs Error Level Analysis on an image and returns a heatmap image.
     :param image_path: Path to original image
@@ -12,9 +11,8 @@ def perform_ela(image_path: str, save_path: str = None, quality: int = 85) -> Im
     """
     #open the original image
     original = Image.open(image_path).convert('RGB')
-    # create a comparison image using a unique temp file per request
-    with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
-        temp_path = temp_file.name
+    # create a comparsion image
+    temp_path = "temp_ela.jpg"
     original.save(temp_path, 'JPEG', quality=quality)
     compressed = Image.open(temp_path)
 
@@ -36,5 +34,5 @@ def perform_ela(image_path: str, save_path: str = None, quality: int = 85) -> Im
     # Clean up temporary file
     if os.path.exists(temp_path):
         os.remove(temp_path)
-        
+
     return diff
