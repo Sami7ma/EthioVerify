@@ -1,5 +1,6 @@
 from PIL import Image, ImageChops, ImageEnhance
 import os
+import numpy as np
 
 def perform_ela(image_path: str, save_path: str = None, quality: int = 95) -> Image.Image:
     """
@@ -36,3 +37,18 @@ def perform_ela(image_path: str, save_path: str = None, quality: int = 95) -> Im
         os.remove(temp_path)
 
     return diff
+
+def analyze_ela_intensity(ela_image: Image.Image) -> float:
+    """
+    Analyzes the intensity of the ELA heatmap to compute a score.
+    Higer intesity = more likely to be manipulated
+    """
+    gray = ela_image.convert('L')  # Convert to grayscale
+    
+    #conver the image to numpy array for analysis
+    pixels = np.array(gray)
+    # calculate the mean intensity of the ELA image
+    mean_intensity = np.mean(pixels)
+
+    ela_score = (mean_intensity / 255.0) * 100  # Normalize to 0-100
+    return round(float(ela_score), 2)
