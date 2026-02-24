@@ -17,8 +17,30 @@ It sometimes leaves traces in EXIF like:
 
 That's suspicious for a bank payment screenshot.
 
-PIL = python imaging library
+**PIL = python imaging library**
 Modern verison is called pillow
 - open images
 - read metadata
 - later also manipulate pixels
+
+**easyocr**
+user for:
+- reading text form images
+- Extracting Transaction Id
+- Extracting Amount
+- Extracting Date
+
+**python-multipart**
+required for file uploads in fastapi:
+
+**opencv-python**
+used for:
+- Pixel diffrence (ELA)
+- Blur detectin
+- Texture analysis
+
+**numpy**
+This one is used by opencv: It allows
+- Matrix math
+- pixel calcutaions
+- Image diffrence computaion

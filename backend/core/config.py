@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
 
-    APP_NAME: str = "Ethio-Verify"
+    APP_NAME: str = "EthioVerify"
     DEBUG: bool = True
 
     UPLOAD_DIR: str = "temp_uploads"

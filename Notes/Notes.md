@@ -110,3 +110,7 @@ We’ll implement:
 - Edited areas will have higher diffrenve (they weren't part of the original compressipn)
 **Result:** A form of "heatmap" highlighting suspicious regions
 
+**what are used here**:
+    **ImageChops:** used for "channel operations" liek substracting one image form another
+    **ImageEnhance:**  used to make the subtle diffrence visible to human eye.
+    **Os** used to delete the temporary file creadted durign the process 

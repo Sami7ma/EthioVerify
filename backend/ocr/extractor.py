@@ -14,13 +14,27 @@ def extract_text(image_path: str) -> dict:
             "raw_text": "",
             "transaction_id": None,
             "amount": None,
-            "date": None
+            "date": None,
+            "confidence": 0.0
         }
 
     try:
         results = reader.readtext(image_path)
-        full_text = " ".join([text[1] for text in results])
+
+        full_text = ""
+        confidences = []
+
+        for detection in results:
+            full_text += detection[1] + " "
+            confidences.append(detection[2])  # 👈 confidence value from EasyOCR
+
         normalized_text = " ".join(full_text.split())
+
+        # calculate average confidence
+        if confidences:
+            avg_confidence = sum(confidences) / len(confidences)
+        else:
+            avg_confidence = 0.0
 
         transaction_id = extract_transaction_id(normalized_text)
         amount = extract_amount(normalized_text)
@@ -30,7 +44,8 @@ def extract_text(image_path: str) -> dict:
             "raw_text": normalized_text,
             "transaction_id": transaction_id,
             "amount": amount,
-            "date": date
+            "date": date,
+            "confidence": avg_confidence   # 🔥 THIS IS WHAT WAS MISSING
         }
 
     except Exception as e:
@@ -39,7 +54,8 @@ def extract_text(image_path: str) -> dict:
             "raw_text": "",
             "transaction_id": None,
             "amount": None,
-            "date": None
+            "date": None,
+            "confidence": 0.0
         }
 
 # Regex helpers
