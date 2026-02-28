@@ -26,10 +26,13 @@ def validate_receipt_logic(data: dict):
     
     # 3. Amount validation
     try:
-        amount_numeric = float(data["amount"].replace("ETB","")).replace(",","").strip()
+        clean_amount = data["amount"].replace("ETB", "").replace(",", "").strip()
+        amount_numeric = float(clean_amount)
+
         if amount_numeric <= 0:
             risk_flags.append("Non-positive amount")
-            rule_score -= 30
+            rule_score -= 3
+        
     except:
         risk_flags.append("Invalid amount format")
         rule_score -= 20
